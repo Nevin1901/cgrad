@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <math.h>
 
+#define OPTIM_STEPS 20
+
 int main() {
 	// val
 	float i = 1.5f;
 	// weight
 	float w = 0.8f;
 
-	float a = i * w;
+	// float a = i * w;
 	// desired output
 	float y = 0.5f;
 	// learning rate
@@ -20,27 +22,35 @@ int main() {
 	
 	// cC/cA
 	// isn't this the loss function?
-	float cC = 2 * (a - y);
+	// float cC = 2 * (a - y);
+
+	float a;
+	float cC;
 
 	// cA / cW
 	float cA = 1.5f;
 
-	/*
-	for (int i = 0; i < 10; i++) {
-		w = w - r * (cC * cA);
+	for (int k = 0; k < OPTIM_STEPS; k++) {
 		a = i * w;
 		cC = 2 * (a - y);
-		printf("%f\n", w);
+		w = w - (r * cC * cA);
+		printf("%f-%f\n", w, cC);
 	}
-	*/
 
-	float cW0 = w - (r * cC * cA);
-	w = cW0;
+	// float cW0 = w - (r * cC * cA);
+	// w = cW0;
+	
+	/*
+	w = w - (r * cC * cA);
 	a = i * w;
 	cC = 2 * (a - y);
+	printf("%f-%f\n", w, a);
 
-	float cW1 = w - (r * cC * cA);
-	printf("%f\n", cW1);
+	w = w - (r * cC * cA);
+	a = i * w;
+	cC = 2 * (a - y);
+	printf("%f-%f\n", w, a);
+	*/
 
 	return 0;
 	// C = (a - y)^2 (mse cost funciton)
